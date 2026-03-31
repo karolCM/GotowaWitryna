@@ -4,7 +4,11 @@
       "Bash(npx create-next-app@latest:*)",
       "Bash(npm init:*)",
       "Bash(npm install:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npm run:*)",
+      "Bash(pkill -f \"next dev\" 2>/dev/null; echo \"Stopped existing dev servers\")",
+      "Bash(taskkill /F /IM node.exe 2>/dev/null; sleep 2; rm -f .next/dev/lock 2>/dev/null; echo \"Cleaned up processes and lock file\")",
+      "Bash(sleep 5 && curl -s http://localhost:3000 > /dev/null 2>&1 && echo \"Server running on port 3000\" || curl -s http://localhost:3001 > /dev/null 2>&1 && echo \"Server running on port 3001\" || echo \"Checking server status...\")"
     ]
   }
 }

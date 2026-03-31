@@ -1,92 +1,155 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ScanSearch, Palette, Eye } from "lucide-react";
-import SectionReveal from "./SectionReveal";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { Link, Cpu, Eye, Rocket, Clock } from "lucide-react";
 
 const steps = [
   {
     number: "01",
-    icon: ScanSearch,
-    title: "Analiza profilu",
+    icon: Link,
+    title: "Podaj nam link",
     description:
-      "Przeglądamy Twoje dotychczasowe publikacje, zdjęcia i opinie. Identyfikujemy to, co najlepiej prezentuje Twoją markę.",
+      "Wpisz adres swojego profilu na Facebooku lub Instagramie. To wszystko, czego od Ciebie potrzebujemy.",
+    time: "2 minuty",
   },
   {
     number: "02",
-    icon: Palette,
-    title: "Profesjonalna adaptacja",
+    icon: Cpu,
+    title: "My tworzymy Twój projekt",
     description:
-      "Nasi specjaliści wybierają najlepsze treści i układają je w czytelny, sprzedażowy projekt strony internetowej.",
+      "Analizujemy Twoje zdjęcia, posty i opinie. Wybieramy najlepsze materiały i budujemy z nich profesjonalną stronę.",
+    time: "do 24 godzin",
   },
   {
     number: "03",
     icon: Eye,
-    title: "Prezentacja demo",
+    title: "Sprawdzasz i oceniasz",
     description:
-      "Przygotowujemy dla Ciebie gotową propozycję. Sprawdzasz, oceniasz i dopiero wtedy decydujesz. Bez zobowiązań.",
+      "Dostajesz link do gotowego projektu. Przeglądasz go na telefonie i komputerze. Mówisz, co zmienić — albo akceptujesz.",
+    time: "bez pośpiechu",
+  },
+  {
+    number: "04",
+    icon: Rocket,
+    title: "Uruchamiamy Twoją stronę",
+    description:
+      "Podpinamy domenę, aktywujemy hosting i SSL. Twoja strona jest online. Od tego momentu zajmujemy się wszystkim.",
+    time: "1 dzień",
   },
 ];
 
 export default function Process() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
   return (
-    <section
-      id="proces"
-      className="relative py-24 md:py-32 overflow-hidden"
-    >
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy-700 to-transparent" />
+    <section id="proces" ref={ref} className="section-padding bg-white">
+      <div className="container-custom">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-16"
+        >
+          <span className="inline-block text-sm font-bold text-accent-500 uppercase tracking-wider mb-4">
+            Jak to działa
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-bold text-primary-950 leading-tight mb-6">
+            4 proste kroki do Twojej nowej strony.
+          </h2>
+        </motion.div>
 
-      {/* Background accent */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-terracotta-500/5 blur-[120px] pointer-events-none" />
+        {/* Steps Grid */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate={isInView ? "show" : "hidden"}
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
+        >
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <motion.div
+                key={index}
+                variants={item}
+                className="relative group"
+              >
+                {/* Connector Line */}
+                {index < steps.length - 1 && (
+                  <div className="hidden lg:block absolute top-16 left-[60%] w-[80%] border-t-2 border-dashed border-accent-200" />
+                )}
 
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionReveal>
-          <div className="max-w-2xl mb-20">
-            <p className="text-xs font-medium text-terracotta-400 tracking-widest uppercase mb-4">
-              Nasz proces
-            </p>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white leading-tight mb-6">
-              Ty budujesz markę na Facebooku,{" "}
-              <span className="text-slate-400">
-                my nadajemy jej formę strony&nbsp;www.
-              </span>
-            </h2>
-          </div>
-        </SectionReveal>
-
-        {/* Steps */}
-        <div className="relative">
-          {/* Connecting line */}
-          <div className="hidden md:block absolute top-24 left-[calc(16.666%+24px)] right-[calc(16.666%+24px)] h-px bg-gradient-to-r from-navy-700 via-terracotta-500/30 to-navy-700" />
-
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            {steps.map((step, i) => (
-              <SectionReveal key={step.number} delay={0.15 * i}>
-                <div className="relative">
-                  {/* Number watermark — behind, offset to top-right */}
-                  <div className="absolute -top-6 left-10 font-display text-8xl text-navy-800/40 select-none leading-none pointer-events-none">
+                <div className="bg-white rounded-2xl p-6 border-2 border-border hover:border-accent-300 hover:shadow-xl transition-all duration-300 card-hover h-full">
+                  {/* Number Badge */}
+                  <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-accent-500 flex items-center justify-center text-white font-bold text-sm">
                     {step.number}
                   </div>
 
-                  {/* Step icon */}
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="relative z-10 mb-8 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-navy-800 border border-navy-700 text-terracotta-400"
-                  >
-                    <step.icon size={24} strokeWidth={1.5} />
-                  </motion.div>
+                  {/* Icon */}
+                  <div className="w-14 h-14 rounded-xl bg-accent-50 group-hover:bg-accent-500 flex items-center justify-center mb-4 transition-colors duration-300">
+                    <Icon
+                      size={28}
+                      className="text-accent-500 group-hover:text-white transition-colors duration-300"
+                    />
+                  </div>
 
-                  <h3 className="font-display text-2xl text-white mb-3">
+                  {/* Title */}
+                  <h3 className="font-display text-xl font-bold text-primary-950 mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-slate-400 leading-relaxed">
+
+                  {/* Description */}
+                  <p className="text-text-secondary text-sm leading-relaxed mb-4">
                     {step.description}
                   </p>
+
+                  {/* Time Badge */}
+                  <div className="flex items-center gap-2 text-xs font-medium text-accent-600">
+                    <Clock size={14} />
+                    <span>{step.time}</span>
+                  </div>
                 </div>
-              </SectionReveal>
-            ))}
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        {/* Bottom Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="text-center"
+        >
+          <div className="inline-flex items-center gap-3 px-6 py-4 bg-accent-50 rounded-2xl border border-accent-200">
+            <span className="text-2xl">⚡</span>
+            <p className="text-lg font-semibold text-primary-950">
+              Od Twojego linka do gotowej strony — maksymalnie 48 godzin.
+              <span className="text-accent-500">
+                {" "}
+                A projekt demo otrzymujesz za darmo.
+              </span>
+            </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

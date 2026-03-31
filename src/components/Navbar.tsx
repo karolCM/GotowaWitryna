@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Dlaczego my", href: "#przewaga" },
-  { label: "Proces", href: "#proces" },
-  { label: "Oferta", href: "#oferta" },
+  { label: "Jak to działa", href: "#proces" },
+  { label: "Co dostajesz", href: "#co-dostajesz" },
+  { label: "Cennik", href: "#cennik" },
+  { label: "Realizacje", href: "#realizacje" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -26,50 +27,52 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-navy-950/80 backdrop-blur-xl border-b border-white/5"
-          : "bg-transparent"
+          ? "bg-white/95 backdrop-blur-xl border-b border-border shadow-sm"
+          : "bg-white/80 backdrop-blur-md"
       }`}
     >
-      <div className="mx-auto max-w-6xl px-6 flex items-center justify-between h-16 md:h-20">
-        {/* Logo */}
-        <a
-          href="#"
-          className="font-display text-xl md:text-2xl text-white tracking-tight"
-          aria-label="GotowaWitryna - strona g&lstrok;ówna"
-        >
-          Gotowa
-          <span className="text-terracotta-400">Witryna</span>
-        </a>
-
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="link-underline text-sm text-slate-400 hover:text-white transition-colors duration-300 tracking-wide uppercase"
-            >
-              {link.label}
-            </a>
-          ))}
+      <div className="container-custom">
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo */}
           <a
-            href="#kontakt"
-            className="ml-2 px-5 py-2.5 bg-terracotta-500 hover:bg-terracotta-600 text-white text-sm font-medium rounded-lg transition-colors duration-300"
+            href="#"
+            className="font-display text-xl md:text-2xl font-bold text-primary-950 tracking-tight"
+            aria-label="GotowaWitryna - strona główna"
           >
-            Rozpocznij projekt
+            Gotowa
+            <span className="text-accent-500">Witryna</span>
           </a>
-        </div>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-white p-2"
-          aria-label={mobileOpen ? "Zamknij menu" : "Otwórz menu"}
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="link-underline text-sm text-text-secondary hover:text-primary-950 transition-colors duration-300 font-medium"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="#kontakt"
+              className="ml-2 px-6 py-3 bg-accent-500 hover:bg-accent-600 text-white text-sm font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-accent-500/20"
+            >
+              Otrzymaj darmowe demo →
+            </a>
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden text-primary-950 p-2"
+            aria-label={mobileOpen ? "Zamknij menu" : "Otwórz menu"}
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -80,15 +83,15 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-navy-950/95 backdrop-blur-xl border-t border-white/5"
+            className="md:hidden bg-white border-b border-border"
           >
-            <div className="px-6 py-6 flex flex-col gap-4">
+            <div className="container-custom py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-slate-300 hover:text-white text-base py-2 transition-colors"
+                  className="text-text-secondary hover:text-primary-950 text-base py-2 transition-colors font-medium"
                 >
                   {link.label}
                 </a>
@@ -96,9 +99,9 @@ export default function Navbar() {
               <a
                 href="#kontakt"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 px-5 py-3 bg-terracotta-500 text-white text-sm font-medium rounded-lg text-center"
+                className="mt-2 px-6 py-3 bg-accent-500 text-white text-sm font-semibold rounded-lg text-center"
               >
-                Rozpocznij projekt
+                Otrzymaj darmowe demo →
               </a>
             </div>
           </motion.div>

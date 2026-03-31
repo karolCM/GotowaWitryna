@@ -3,33 +3,62 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import SectionReveal from "./SectionReveal";
 
 const faqs = [
   {
-    question: "Ile czasu muszę na to poświęcić?",
+    question: "Ile muszę na to poświęcić czasu?",
     answer:
-      "Prawie zero. Bazujemy na tym, co już opublikowałeś w sieci. Analizujemy Twoje posty, zdjęcia i opinie, a następnie tworzymy stronę na ich podstawie. Jedyne, co musisz zrobić, to przejrzeć gotowy projekt i zatwierdzić go.",
-  },
-  {
-    question: "Czy strona będzie wyglądać jak inne?",
-    answer:
-      "Nie. Każdy projekt jest indywidualnie dopasowany do charakteru Twojej branży i Twoich materiałów. Nie używamy gotowych szablonów — każda strona jest kuratorowana przez nasz zespół specjalnie dla Ciebie.",
-  },
-  {
-    question: "Kiedy zobaczę efekt?",
-    answer:
-      "Przygotowanie wstępnego projektu zajmuje nam zazwyczaj od 24 do 48 godzin od Twojego zgłoszenia. Dostajesz pełną propozycję strony, którą możesz ocenić zanim podejmiesz jakąkolwiek decyzję.",
+      "Dosłownie 2-5 minut. Podajesz nam link do swojego profilu na Facebooku lub Instagramie — i to wszystko. My robimy całą resztę. Jedyny moment, gdy angażujesz się bardziej, to przegląd gotowego projektu i ewentualne uwagi.",
   },
   {
     question: "Czy muszę znać się na technologii?",
     answer:
-      "Absolutnie nie. Zajmujemy się wszystkim — od projektu graficznego, przez domenę i hosting, po bezpieczeństwo. Ty koncentrujesz się na swoim biznesie, my na Twojej obecności w sieci.",
+      "Absolutnie nie. Nie musisz wiedzieć co to hosting, domena czy WordPress. My zajmujemy się całą technologią. Jeśli umiesz wysłać wiadomość na Messengerze — to umiesz współpracować z nami.",
+  },
+  {
+    question: "Ile kosztuje strona?",
+    answer:
+      "Pakiet Start to 149 zł netto miesięcznie (+ jednorazowa opłata startowa 499 zł) lub 199 zł netto miesięcznie z umową na 12 miesięcy bez opłaty startowej. W cenie masz wszystko — stronę, hosting, domenę, blog, lead magnet i obsługę techniczną.",
+  },
+  {
+    question: "Czy mogę zobaczyć stronę przed zapłatą?",
+    answer:
+      "Tak! Projekt demo przygotowujemy za darmo i bez zobowiązań. Dopiero gdy go zaakceptujesz, uruchamiamy stronę i zaczyna się abonament.",
+  },
+  {
+    question: "Co to jest lead magnet?",
+    answer:
+      "To darmowy materiał (np. poradnik PDF, checklista, kalkulator), który umieszczamy na Twojej stronie. Klient pobiera go w zamian za podanie swojego adresu e-mail — a Ty dostajesz kontakt do potencjalnego klienta. Przygotowujemy go za Ciebie, dopasowany do Twojej branży.",
   },
   {
     question: "Co jeśli projekt mi się nie spodoba?",
     answer:
-      "Nie ma problemu. Najpierw przygotowujemy demo — możesz je ocenić bez żadnych zobowiązań. Jeśli nie będzie odpowiadać Twoim oczekiwaniom, nic nie tracisz.",
+      "Wprowadzamy poprawki na podstawie Twoich uwag — bez dodatkowych opłat. Jeśli mimo poprawek nie chcesz kontynuować — nic nie płacisz. Nie podpisujesz żadnej umowy na etapie demo.",
+  },
+  {
+    question: "Ile czekam na gotową stronę?",
+    answer:
+      "Projekt demo otrzymujesz w ciągu 24 godzin od podania linka do profilu. Po akceptacji — uruchomienie strony na żywo trwa kolejne 24h. Łącznie: od Twojego linka do działającej strony w mniej niż 48 godzin.",
+  },
+  {
+    question: "Co dostaje moja firma każdego miesiąca?",
+    answer:
+      "W zależności od pakietu: 2-8 artykułów blogowych zoptymalizowanych pod Google, lead magnet branżowy, pełną obsługę techniczną (hosting, bezpieczeństwo, aktualizacje), a także Twoje drobne zmiany treści realizowane na bieżąco.",
+  },
+  {
+    question: "Czy strona będzie widoczna w Google?",
+    answer:
+      "Tak. Każdą stronę optymalizujemy pod SEO (pojawianie się w Google). Dodatkowo artykuły blogowe, które publikujemy co miesiąc, stopniowo zwiększają Twoją widoczność na frazy, których szukają Twoi klienci.",
+  },
+  {
+    question: "Czy mogę zrezygnować?",
+    answer:
+      "Tak. Jeśli wybrałeś wariant z opłatą startową — wypowiadasz umowę z miesięcznym okresem wypowiedzenia, bez kar. Jeśli wybrałeś wariant \"0 zł na start\" — umowa trwa minimum 12 miesięcy, a potem również przechodzi na miesięczne wypowiedzenie.",
+  },
+  {
+    question: "Kto jest właścicielem strony?",
+    answer:
+      "Domena jest rejestrowana na Twoje dane — należy do Ciebie. Treści na stronie (teksty, zdjęcia) są Twoją własnością. Jeśli zrezygnujesz z usługi, możesz przenieść domenę do innego dostawcy.",
   },
 ];
 
@@ -45,63 +74,69 @@ function FAQItem({
   const [open, setOpen] = useState(false);
 
   return (
-    <SectionReveal delay={0.05 * index}>
-      <div className="border-b border-navy-700/40">
-        <button
-          onClick={() => setOpen(!open)}
-          className="w-full flex items-center justify-between py-6 text-left group"
-          aria-expanded={open}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      viewport={{ once: true, margin: "-50px" }}
+      className="border-b border-border last:border-0"
+    >
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between py-6 text-left group"
+        aria-expanded={open}
+      >
+        <span className="font-display text-lg md:text-xl text-primary-950 group-hover:text-accent-500 transition-colors duration-300 pr-8">
+          {question}
+        </span>
+        <motion.span
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="shrink-0 text-text-secondary"
         >
-          <span className="font-display text-lg md:text-xl text-white group-hover:text-terracotta-300 transition-colors duration-300 pr-8">
-            {question}
-          </span>
-          <motion.span
-            animate={{ rotate: open ? 180 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="shrink-0 text-slate-500"
+          <ChevronDown size={20} />
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
           >
-            <ChevronDown size={20} />
-          </motion.span>
-        </button>
-        <AnimatePresence initial={false}>
-          {open && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden"
-            >
-              <p className="pb-6 text-slate-400 leading-relaxed max-w-2xl">
-                {answer}
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </SectionReveal>
+            <p className="pb-6 text-text-secondary leading-relaxed max-w-2xl">
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
 export default function FAQ() {
   return (
-    <section id="faq" className="relative py-24 md:py-32 overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy-700 to-transparent" />
+    <section id="faq" className="section-padding bg-white">
+      <div className="container-custom">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <span className="inline-block text-sm font-bold text-accent-500 uppercase tracking-wider mb-4">
+            FAQ
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-bold text-primary-950 leading-tight">
+            Najczęstsze pytania.
+          </h2>
+        </motion.div>
 
-      <div className="mx-auto max-w-3xl px-6">
-        <SectionReveal>
-          <div className="text-center mb-16">
-            <p className="text-xs font-medium text-terracotta-400 tracking-widest uppercase mb-4">
-              Najczęstsze pytania
-            </p>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white leading-tight">
-              Masz pytania?{" "}
-              <span className="text-slate-400">Mamy odpowiedzi.</span>
-            </h2>
-          </div>
-        </SectionReveal>
-
-        <div>
+        <div className="max-w-3xl mx-auto divide-y divide-border">
           {faqs.map((faq, i) => (
             <FAQItem key={i} question={faq.question} answer={faq.answer} index={i} />
           ))}

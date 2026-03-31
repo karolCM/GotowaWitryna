@@ -1,10 +1,17 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Advantage from "@/components/Advantage";
+import SocialProofBar from "@/components/SocialProofBar";
+import Problem from "@/components/Problem";
+import Solution from "@/components/Solution";
 import Process from "@/components/Process";
 import Features from "@/components/Features";
+import Industries from "@/components/Industries";
+import Pricing from "@/components/Pricing";
+import Comparison from "@/components/Comparison";
+import Portfolio from "@/components/Portfolio";
+import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
-import LeadFlow from "@/components/LeadFlow";
+import CTAFinal from "@/components/CTAFinal";
 import Footer from "@/components/Footer";
 
 const jsonLd = {
@@ -13,13 +20,14 @@ const jsonLd = {
   name: "GotowaWitryna",
   url: "https://gotowawitryna.pl",
   description:
-    "Przenosimy Twój biznes z Facebooka na profesjonalny poziom. Tworzymy kompletne strony www na podstawie Twoich materiałów z mediów społecznościowych.",
+    "Profesjonalne strony internetowe dla małych firm w 24 godziny. Podaj link do Facebooka, my zbudujemy Ci stronę www z hostingiem, domeną i obsługą techniczną.",
   areaServed: {
     "@type": "Country",
     name: "Polska",
   },
   serviceType: "Tworzenie stron internetowych",
   knowsLanguage: "pl",
+  priceRange: "149-549 PLN",
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Usługi tworzenia stron www",
@@ -28,9 +36,22 @@ const jsonLd = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Profesjonalna strona www z social media",
+          name: "Pakiet Start - strona one-page",
           description:
-            "Kompletna strona internetowa stworzona na podstawie materiałów z profilu Facebook lub Instagram. W cenie: projekt, copywriting, hosting, domena, SSL.",
+            "Profesjonalna strona www z copywritingiem, domeną, hostingiem i SSL. Od 149 zł/msc",
+          price: "149",
+          priceCurrency: "PLN",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Pakiet Biznes - strona multi-page",
+          description:
+            "Rozbudowana strona www z blogiem, lead magnetami i marketingiem. Od 249 zł/msc",
+          price: "249",
+          priceCurrency: "PLN",
         },
       },
     ],
@@ -43,26 +64,10 @@ const faqJsonLd = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Ile czasu muszę poświęcić na stworzenie strony www?",
+      name: "Ile muszę na to poświęcić czasu?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Prawie zero. Bazujemy na tym, co już opublikowałeś w sieci. Analizujemy Twoje posty, zdjęcia i opinie, a następnie tworzymy stronę na ich podstawie.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Czy strona będzie wyglądać jak inne?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Nie. Każdy projekt jest indywidualnie dopasowany do charakteru Twojej branży i Twoich materiałów. Nie używamy gotowych szablonów.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Kiedy zobaczę efekt?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Przygotowanie wstępnego projektu zajmuje zazwyczaj od 24 do 48 godzin od zgłoszenia.",
+        text: "Dosłownie 2-5 minut. Podajesz nam link do swojego profilu na Facebooku lub Instagramie — i to wszystko. My robimy całą resztę.",
       },
     },
     {
@@ -70,15 +75,23 @@ const faqJsonLd = {
       name: "Czy muszę znać się na technologii?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Absolutnie nie. Zajmujemy się wszystkim — od projektu graficznego, przez domenę i hosting, po bezpieczeństwo.",
+        text: "Absolutnie nie. Nie musisz wiedzieć co to hosting, domena czy WordPress. My zajmujemy się całą technologią.",
       },
     },
     {
       "@type": "Question",
-      name: "Co jeśli projekt mi się nie spodoba?",
+      name: "Ile kosztuje strona?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Najpierw przygotowujemy demo — możesz je ocenić bez żadnych zobowiązań. Jeśli nie będzie odpowiadać Twoim oczekiwaniom, nic nie tracisz.",
+        text: "Pakiet Start to 149 zł netto miesięcznie lub 199 zł z umową na 12 miesięcy bez opłaty startowej. W cenie masz wszystko — stronę, hosting, domenę, blog, lead magnet i obsługę techniczną.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Czy mogę zobaczyć stronę przed zapłatą?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Tak! Projekt demo przygotowujemy za darmo i bez zobowiązań. Dopiero gdy go zaakceptujesz, uruchamiamy stronę i zaczyna się abonament.",
       },
     },
   ],
@@ -98,11 +111,18 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Advantage />
+        <SocialProofBar />
+        <Problem />
+        <Solution />
         <Process />
         <Features />
+        <Industries />
+        <Pricing />
+        <Comparison />
+        <Portfolio />
+        <Testimonials />
         <FAQ />
-        <LeadFlow />
+        <CTAFinal />
       </main>
       <Footer />
     </>
