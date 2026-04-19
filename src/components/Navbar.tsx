@@ -1,20 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Jak to działa", href: "#proces" },
-  { label: "Co dostajesz", href: "#co-dostajesz" },
-  { label: "Cennik", href: "#cennik" },
-  { label: "Realizacje", href: "#realizacje" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Jak to działa", anchor: "proces" },
+  { label: "Co dostajesz", anchor: "co-dostajesz" },
+  { label: "Cennik", anchor: "cennik" },
+  { label: "Realizacje", anchor: "realizacje" },
+  { label: "FAQ", anchor: "faq" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  // On any page other than the homepage we need absolute anchors (/#section)
+  const isHome = pathname === "/";
+  const prefix = isHome ? "" : "/";
+
+  const href = (anchor: string) => `${prefix}#${anchor}`;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -35,9 +43,9 @@ export default function Navbar() {
     >
       <div className="container-custom">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
+          {/* Logo — always goes to homepage */}
           <motion.a
-            href="#"
+            href="/"
             whileHover={{ scale: 1.02 }}
             className="font-display text-xl md:text-2xl font-bold text-gray-900 tracking-tight"
             aria-label="GotowaWitryna - strona główna"
@@ -50,8 +58,8 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <motion.a
-                key={link.href}
-                href={link.href}
+                key={link.anchor}
+                href={href(link.anchor)}
                 whileHover={{ y: -2 }}
                 className="link-underline text-sm text-gray-600 hover:text-gray-900 transition-colors duration-300 font-medium cursor-pointer"
               >
@@ -93,8 +101,8 @@ export default function Navbar() {
             <div className="container-custom py-6 flex flex-col gap-4">
               {navLinks.map((link, index) => (
                 <motion.a
-                  key={link.href}
-                  href={link.href}
+                  key={link.anchor}
+                  href={href(link.anchor)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
