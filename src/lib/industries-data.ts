@@ -343,7 +343,7 @@ export const industries: IndustryData[] = [
       {
         title: "Zapytania o wycene trafiaja do dziesiatek firm naraz",
         description:
-          "Klient, ktory nie moze ocenic Twojego poziomu z internetu, pyta o wycene wszystkich z rzedu. Profesjonalna strona wyróznia Cie z tlumu i sprawia, ze klient chce wlasnie Ciebie.",
+          "Klient, ktory nie moze ocenic Twojego poziomu z internetu, pyta o wycene wszystkich z rzedu. Profesjonalna strona wyroznia Cie z tlumu i sprawia, ze klient chce wlasnie Ciebie.",
       },
       {
         title: "Firmy ze stronami www dostaja wiecej zlecen",
@@ -466,7 +466,7 @@ export const industries: IndustryData[] = [
       {
         title: "Strona z historia lokalu",
         description:
-          "Opowiadamy historie Twojego miejsca, filozofie kuchni, chef's story. To buduje emocjonalna wiez z goscmi i wyróznia Cie na tle anonimowych restauracji.",
+          "Opowiadamy historie Twojego miejsca, filozofie kuchni, chef's story. To buduje emocjonalna wiez z goscmi i wyroznia Cie na tle anonimowych restauracji.",
       },
     ],
     leadMagnet: "5 przepisow szefa kuchni, ktorych nigdzie nie znajdziesz -- ekskluzywny e-book",
@@ -520,7 +520,7 @@ export const industries: IndustryData[] = [
       {
         title: "Facebook niszczy jakosc Twoich zdiec",
         description:
-          "Facebook kompresuje zdjecia i obniza ich jakosc. Twoje prace -- ktorymi wyrózniasz sie na rynku -- wygladaja gorzej niz powinny. Na wlasnej stronie prezentujesz je w pelnej rozdzielczosci.",
+          "Facebook kompresuje zdjecia i obniza ich jakosc. Twoje prace -- ktorymi wyrozniasz sie na rynku -- wygladaja gorzej niz powinny. Na wlasnej stronie prezentujesz je w pelnej rozdzielczosci.",
       },
       {
         title: "Klienci nie widza Twojego stylu fotografii od razu",
@@ -615,7 +615,7 @@ export const industries: IndustryData[] = [
       {
         title: "Klienci nie widza Twojej filozofii treningu",
         description:
-          "To, co Cie wyróznia jako trenera, ginie w krotkich postach. Strona www daje Ci przestrzen na opowiedzenie swojej historii, metodologii i podejscia.",
+          "To, co Cie wyroznia jako trenera, ginie w krotkich postach. Strona www daje Ci przestrzen na opowiedzenie swojej historii, metodologii i podejscia.",
       },
       {
         title: "Pracujesz tylko z klientami z polecenia, a chcesz rosnac",
@@ -728,7 +728,7 @@ export const industries: IndustryData[] = [
       {
         title: "Galeria realizacji",
         description:
-          "Zdjecia wykonanych prac -- zainstalowanych urzadzen, naprawionych awarii, efektow sprzatania. Buduja zaufanie i wyrózniaja Cie na tle konkurencji bez strony.",
+          "Zdjecia wykonanych prac -- zainstalowanych urzadzen, naprawionych awarii, efektow sprzatania. Buduja zaufanie i wyrozniaja Cie na tle konkurencji bez strony.",
       },
       {
         title: "Opinie i referencje",
@@ -936,7 +936,7 @@ export const industries: IndustryData[] = [
           "Tak -- mozemy stworzyc dwujezyczna strone lub osobna wersje anglojezyczna. Omow to z nami przy zamowieniu demo.",
       },
       {
-        question: "Jak strona doradcy rózni sie od zwyklej strony firmowej?",
+        question: "Jak strona doradcy rozni sie od zwyklej strony firmowej?",
         answer:
           "Strona doradcy kladzie nacisk na autorytet eksperta: Twoja historie, certyfikaty, case studies i artykuly. To strona, ktora sprzedaje Twoja wiedze -- a nie tylko liste uslug.",
       },
