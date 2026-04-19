@@ -8,7 +8,19 @@
       "Bash(npm run:*)",
       "Bash(pkill -f \"next dev\" 2>/dev/null; echo \"Stopped existing dev servers\")",
       "Bash(taskkill /F /IM node.exe 2>/dev/null; sleep 2; rm -f .next/dev/lock 2>/dev/null; echo \"Cleaned up processes and lock file\")",
-      "Bash(sleep 5 && curl -s http://localhost:3000 > /dev/null 2>&1 && echo \"Server running on port 3000\" || curl -s http://localhost:3001 > /dev/null 2>&1 && echo \"Server running on port 3001\" || echo \"Checking server status...\")"
+      "Bash(sleep 5 && curl -s http://localhost:3000 > /dev/null 2>&1 && echo \"Server running on port 3000\" || curl -s http://localhost:3001 > /dev/null 2>&1 && echo \"Server running on port 3001\" || echo \"Checking server status...\")",
+      "Bash(ssh ubuntu@51.68.235.51)",
+      "Bash(ssh -i ~/.ssh/id_ed25519 ubuntu@51.68.235.51)",
+      "Bash(ssh -v ubuntu@51.68.235.51 2>&1 | grep -i \"auth\")",
+      "Bash(ssh-keygen -l -f ~/.ssh/id_rsa)",
+      "Bash(ssh -i ~/.ssh/id_rsa_openssh ubuntu@51.68.235.51)",
+      "Bash(ssh -i ~/.ssh/id_rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa ubuntu@51.68.235.51)",
+      "Bash(echo \"Testing connection\" && plink -i ~/.ssh/id_rsa ubuntu@51.68.235.51 \"echo 'Connected successfully' && hostname && whoami\")",
+      "Bash(plink -i ~/.ssh/id_rsa ubuntu@51.68.235.51 \"uname -a && cat /etc/os-release | grep -E 'NAME|VERSION' && df -h && free -h && uptime\")",
+      "Bash(plink -i ~/.ssh/id_rsa ubuntu@51.68.235.51 \"which docker && docker --version || echo 'Docker not installed'\")",
+      "Bash(plink -i ~/.ssh/id_rsa ubuntu@51.68.235.51 \"which docker-compose && docker-compose --version || echo 'Docker Compose not installed'\")",
+      "Bash(plink -i ~/.ssh/id_rsa ubuntu@51.68.235.51 \"sudo ufw status || sudo iptables -L -n | head -20\")",
+      "Bash(plink -i ~/.ssh/id_rsa ubuntu@51.68.235.51 \"netstat -tulpn | grep LISTEN || ss -tulpn | grep LISTEN\")"
     ]
   }
 }

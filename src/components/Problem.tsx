@@ -55,19 +55,19 @@ export default function Problem() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="inline-block text-sm font-bold text-accent-500 uppercase tracking-wider mb-4">
+            <span className="inline-block text-sm font-bold text-orange-600 uppercase tracking-wider mb-4">
               Dlaczego to ważne
             </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-bold text-primary-950 leading-tight mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-bold text-gray-900 leading-tight mb-6">
               Sam profil na Facebooku to dziś za mało.
             </h2>
-            <p className="text-lg text-text-secondary leading-relaxed mb-8">
+            <p className="text-lg text-gray-600 leading-relaxed mb-8">
               Twoi klienci szukają usług w Google — nie na Facebooku. Gdy ktoś
               wpisze &quot;fryzjer Radom&quot; albo &quot;mechanik Wrocław&quot;,
               wyskakują firmy ze stronami internetowymi. Bez własnej strony
               jesteś dla tych klientów niewidoczny.
             </p>
-            <p className="text-lg text-text-secondary leading-relaxed">
+            <p className="text-lg text-gray-600 leading-relaxed">
               A nawet gdy ktoś trafi na Twój profil na Facebooku — widzi chaotyczny
               wall postów, nie uporządkowaną ofertę. Brak strony www to sygnał:
               &quot;ta firma może nie być poważna&quot;.
@@ -87,20 +87,20 @@ export default function Problem() {
                 <motion.div
                   key={index}
                   variants={item}
-                  className="group p-6 rounded-2xl bg-white border-2 border-border hover:border-accent-200 hover:shadow-lg transition-all duration-300 card-hover"
+                  className="group p-6 rounded-2xl bg-white border-2 border-gray-200 hover:border-orange-200 hover:shadow-lg transition-all duration-300"
                 >
                   <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-accent-50 flex items-center justify-center group-hover:bg-accent-500 transition-colors duration-300">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
                       <Icon
                         size={24}
-                        className="text-accent-500 group-hover:text-white transition-colors duration-300"
+                        className="text-orange-500 group-hover:text-white transition-colors duration-300"
                       />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-display text-xl font-bold text-primary-950 mb-2">
+                      <h3 className="font-display text-xl font-bold text-gray-900 mb-2">
                         {problem.title}
                       </h3>
-                      <p className="text-text-secondary leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed">
                         {problem.description}
                       </p>
                     </div>

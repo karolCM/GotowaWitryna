@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Sparkles } from "lucide-react";
 
 const plans = [
   {
@@ -73,52 +73,63 @@ export default function Pricing() {
   const [noUpfront, setNoUpfront] = useState(false);
 
   return (
-    <section id="cennik" ref={ref} className="section-padding bg-white">
-      <div className="container-custom">
-        {/* Header */}
+    <section id="cennik" ref={ref} className="section-padding bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808004_1px,transparent_1px),linear-gradient(to_bottom,#80808004_1px,transparent_1px)] bg-[size:64px_64px]" />
+
+      <div className="container-custom relative z-10">
+        {/* Premium Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <span className="inline-block text-sm font-bold text-accent-500 uppercase tracking-wider mb-4">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-block text-sm font-bold text-orange-600 uppercase tracking-wider mb-4 px-4 py-2 rounded-full bg-orange-50 border border-orange-200"
+          >
             Cennik
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-[40px] font-bold text-primary-950 leading-tight mb-6">
-            Prosta, przejrzysta cena. Bez ukrytych kosztów.
+          </motion.span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-gray-900 leading-tight mb-6">
+            Prosta, przejrzysta cena.{" "}
+            <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Bez ukrytych kosztów.</span>
           </h2>
-          <p className="text-lg text-text-secondary mb-8">
+          <p className="text-lg text-gray-600 mb-8">
             Wybierz pakiet, który pasuje do Twojej firmy. Możesz go zmienić w
             dowolnym momencie.
           </p>
 
-          {/* Toggle */}
-          <div className="inline-flex items-center gap-4 p-2 bg-bg-light rounded-full">
-            <button
+          {/* Premium Toggle */}
+          <div className="inline-flex items-center gap-3 p-1.5 bg-white rounded-2xl shadow-sm border border-orange-100">
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={() => setNoUpfront(false)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
+              className={`px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
                 !noUpfront
-                  ? "bg-accent-500 text-white shadow-lg"
-                  : "text-text-secondary hover:text-primary-950"
+                  ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-orange-50"
               }`}
             >
               Z opłatą startową
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={() => setNoUpfront(true)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
+              className={`px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
                 noUpfront
-                  ? "bg-accent-500 text-white shadow-lg"
-                  : "text-text-secondary hover:text-primary-950"
+                  ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-orange-50"
               }`}
             >
               0 zł na start (umowa 12 mc)
-            </button>
+            </motion.button>
           </div>
         </motion.div>
 
-        {/* Pricing Cards */}
+        {/* Premium Pricing Cards */}
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           {plans.map((plan, index) => (
             <motion.div
@@ -126,91 +137,115 @@ export default function Pricing() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative rounded-2xl p-8 border-2 transition-all duration-300 card-hover ${
+              whileHover={{ y: -8 }}
+              className={`relative rounded-3xl p-8 pt-12 border-2 transition-all duration-500 cursor-pointer ${
                 plan.popular
-                  ? "border-accent-300 shadow-xl bg-accent-50/30"
-                  : "border-border bg-white hover:border-accent-200"
+                  ? "border-orange-300 shadow-xl bg-gradient-to-br from-orange-50 to-white"
+                  : "border-gray-200 bg-white hover:border-orange-200 hover:shadow-lg"
               }`}
             >
               {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="inline-block px-4 py-1.5 bg-accent-500 text-white text-xs font-bold uppercase tracking-wider rounded-full">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="absolute -top-4 left-1/2 -translate-x-1/2 z-20"
+                >
+                  <span className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
+                    <Sparkles size={14} />
                     Najpopularniejszy
                   </span>
-                </div>
+                </motion.div>
               )}
 
               {/* Plan Name */}
-              <div className="text-center mb-6">
-                <h3 className="font-display text-2xl font-bold text-primary-950 mb-2">
+              <div className="text-center mb-6 relative z-10">
+                <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">
                   {plan.name}
                 </h3>
-                <p className="text-sm text-text-secondary">{plan.subtitle}</p>
+                <p className="text-sm text-gray-600">{plan.subtitle}</p>
               </div>
 
               {/* Price */}
-              <div className="text-center mb-6">
-                <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-4xl font-extrabold text-primary-950">
+              <div className="text-center mb-6 relative z-10">
+                <div className="flex items-baseline justify-center gap-1.5">
+                  <span className={`text-5xl font-extrabold ${plan.popular ? 'bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent' : 'text-gray-900'}`}>
                     {noUpfront ? plan.priceNoUpfront : plan.priceUpfront}
                   </span>
-                  <span className="text-text-secondary">zł netto / miesiąc</span>
+                  <span className="text-gray-600 font-medium">zł netto / mc</span>
                 </div>
                 {!noUpfront && (
-                  <p className="text-sm text-text-secondary mt-2">
-                    + jednorazowo {plan.setupUpfront} zł netto
+                  <p className="text-sm text-gray-600 mt-3">
+                    + jednorazowo{" "}
+                    <span className="font-semibold text-gray-900">{plan.setupUpfront} zł netto</span>
                   </p>
                 )}
                 {noUpfront && (
-                  <p className="text-sm text-accent-600 font-medium mt-2">
+                  <p className="text-sm text-orange-600 font-semibold mt-3 flex items-center justify-center gap-1">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
                     Umowa na 12 miesięcy
                   </p>
                 )}
               </div>
 
-              {/* CTA */}
-              <a
+              {/* Premium CTA */}
+              <motion.a
                 href="#kontakt"
-                className={`block w-full py-4 px-6 rounded-xl font-semibold text-center transition-all duration-300 mb-6 ${
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`block w-full py-4 px-6 rounded-xl font-semibold text-center transition-all duration-300 mb-6 relative z-10 ${
                   plan.popular
-                    ? "bg-accent-500 hover:bg-accent-600 text-white shadow-lg"
-                    : "bg-primary-950 hover:bg-primary-900 text-white"
+                    ? "bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg hover:shadow-xl hover:shadow-orange-500/30"
+                    : "bg-gray-900 hover:bg-gray-800 text-white shadow-md hover:shadow-lg"
                 }`}
               >
                 Zamów darmowe demo
                 <ArrowRight size={18} className="inline ml-2" />
-              </a>
+              </motion.a>
 
               {/* Features */}
-              <ul className="space-y-3">
+              <ul className="space-y-3 relative z-10">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <Check
-                      size={20}
-                      className="text-success flex-shrink-0 mt-0.5"
-                    />
-                    <span className="text-sm text-text-secondary">
+                    <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check size={14} className="text-green-600" />
+                    </div>
+                    <span className="text-sm text-gray-600 leading-relaxed">
                       {feature}
                     </span>
                   </li>
                 ))}
               </ul>
+
+              {/* Decorative gradient */}
+              {plan.popular && (
+                <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-br from-orange-200/50 to-transparent rounded-full blur-2xl" />
+              )}
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom Note */}
-        <motion.p
+        {/* Premium Bottom Note */}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center text-text-secondary text-sm"
+          className="text-center max-w-2xl mx-auto"
         >
-          Wszystkie ceny netto (+ 23% VAT). Cena obejmuje absolutnie wszystko —
-          bez ukrytych opłat za hosting, domenę czy zmiany. Faktura VAT co
-          miesiąc. Płatność kartą lub przelewem.
-        </motion.p>
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-2xl border-2 border-orange-100 shadow-sm">
+            <svg className="w-5 h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p className="text-gray-600 text-sm">
+              Wszystkie ceny netto (+ 23% VAT). Cena obejmuje absolutnie wszystko —
+              bez ukrytych opłat za hosting, domenę czy zmiany. Faktura VAT co
+              miesiąc. Płatność kartą lub przelewem.
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

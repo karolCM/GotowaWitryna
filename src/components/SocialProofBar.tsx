@@ -3,19 +3,20 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { Rocket, Star, Clock, Briefcase, LucideIcon } from "lucide-react";
 
 interface Metric {
   value: number;
   suffix: string;
   label: string;
-  icon: string;
+  icon: LucideIcon;
 }
 
 const metrics: Metric[] = [
-  { value: 47, suffix: "+", label: "stron uruchomionych", icon: "🔥" },
-  { value: 4.9, suffix: "/5", label: "średnia ocena", icon: "⭐" },
-  { value: 24, suffix: "h", label: "czas realizacji demo", icon: "⏱️" },
-  { value: 12, suffix: "+", label: "branż obsługiwanych", icon: "💼" },
+  { value: 47, suffix: "+", label: "stron uruchomionych", icon: Rocket },
+  { value: 4.9, suffix: "/5", label: "średnia ocena", icon: Star },
+  { value: 24, suffix: "h", label: "czas realizacji demo", icon: Clock },
+  { value: 12, suffix: "+", label: "branż obsługiwanych", icon: Briefcase },
 ];
 
 function CountUp({ value, suffix, duration = 2000 }: { value: number; suffix: string; duration?: number }) {
@@ -64,27 +65,41 @@ export default function SocialProofBar() {
   return (
     <section
       ref={ref}
-      className="relative bg-bg-light py-5 border-y border-border"
+      className="relative bg-gradient-to-r from-blue-50 via-orange-50 to-blue-50 py-6 border-y border-orange-100 overflow-hidden"
     >
-      <div className="container-custom">
+      {/* Subtle animated background */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-100/20 to-transparent animate-pulse" />
+      </div>
+
+      <div className="container-custom relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {metrics.map((metric, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="text-center"
-            >
-              <div className="text-2xl mb-1">{metric.icon}</div>
-              <div className="text-3xl sm:text-4xl font-extrabold text-accent-500 mb-1">
-                <CountUp value={metric.value} suffix={metric.suffix} />
-              </div>
-              <div className="text-xs sm:text-sm text-text-secondary uppercase tracking-wide">
-                {metric.label}
-              </div>
-            </motion.div>
-          ))}
+          {metrics.map((metric, index) => {
+            const Icon = metric.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="text-center group cursor-default"
+              >
+                <motion.div
+                  className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 text-white mb-3 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300"
+                  whileHover={{ rotate: [0, -5, 5, -5, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Icon size={24} strokeWidth={2} />
+                </motion.div>
+                <div className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-orange-400 mb-1">
+                  <CountUp value={metric.value} suffix={metric.suffix} />
+                </div>
+                <div className="text-xs sm:text-sm text-gray-600 uppercase tracking-wide font-medium">
+                  {metric.label}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
