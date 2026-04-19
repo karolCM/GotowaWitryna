@@ -19,18 +19,18 @@ import {
 } from "lucide-react";
 
 const industries = [
-  { name: "Fryzjerzy i barberzy", icon: Scissors },
-  { name: "Salony kosmetyczne", icon: Sparkles },
-  { name: "Warsztaty samochodowe", icon: Wrench },
-  { name: "Firmy budowlane i remontowe", icon: HardHat },
-  { name: "Restauracje i gastronomia", icon: UtensilsCrossed },
-  { name: "Fotografowie", icon: Camera },
-  { name: "Trenerzy personalni", icon: Dumbbell },
-  { name: "Usługi dla domu", icon: Home },
-  { name: "Rzemieślnicy i artyści", icon: Palette },
-  { name: "Doradcy i konsultanci", icon: Scale },
-  { name: "Usługi dla zwierząt", icon: PawPrint },
-  { name: "Transport i przeprowadzki", icon: Truck },
+  { name: "Fryzjerzy i barberzy", icon: Scissors, slug: "fryzjerzy-barberzy" },
+  { name: "Salony kosmetyczne", icon: Sparkles, slug: "salony-kosmetyczne" },
+  { name: "Warsztaty samochodowe", icon: Wrench, slug: "warsztaty-samochodowe" },
+  { name: "Firmy budowlane i remontowe", icon: HardHat, slug: "firmy-budowlane" },
+  { name: "Restauracje i gastronomia", icon: UtensilsCrossed, slug: "restauracje-gastronomia" },
+  { name: "Fotografowie", icon: Camera, slug: "fotografowie" },
+  { name: "Trenerzy personalni", icon: Dumbbell, slug: "trenerzy-personalni" },
+  { name: "Usługi dla domu", icon: Home, slug: "uslugi-dla-domu" },
+  { name: "Rzemieślnicy i artyści", icon: Palette, slug: "rzemieslnicy-artysci" },
+  { name: "Doradcy i konsultanci", icon: Scale, slug: "doradcy-konsultanci" },
+  { name: "Usługi dla zwierząt", icon: PawPrint, slug: "uslugi-dla-zwierzat" },
+  { name: "Transport i przeprowadzki", icon: Truck, slug: "transport-przeprowadzki" },
 ];
 
 export default function Industries() {
@@ -84,10 +84,12 @@ export default function Industries() {
           {industries.map((industry, index) => {
             const Icon = industry.icon;
             return (
-              <motion.div
+              <motion.a
                 key={index}
+                href={`/branza/${industry.slug}`}
                 variants={item}
-                className="group flex flex-col items-center justify-center p-6 rounded-2xl bg-bg-light border-2 border-border hover:border-accent-300 hover:bg-accent-50 transition-all duration-300 cursor-default"
+                whileHover={{ y: -4 }}
+                className="group flex flex-col items-center justify-center p-6 rounded-2xl bg-bg-light border-2 border-border hover:border-accent-300 hover:bg-accent-50 transition-all duration-300 cursor-pointer"
               >
                 <div className="w-14 h-14 rounded-xl bg-white group-hover:bg-accent-500 flex items-center justify-center mb-4 shadow-sm transition-colors duration-300">
                   <Icon
@@ -95,10 +97,10 @@ export default function Industries() {
                     className="text-accent-500 group-hover:text-white transition-colors duration-300"
                   />
                 </div>
-                <span className="text-sm font-medium text-primary-950 text-center">
+                <span className="text-sm font-medium text-primary-950 text-center group-hover:text-accent-600 transition-colors duration-200">
                   {industry.name}
                 </span>
-              </motion.div>
+              </motion.a>
             );
           })}
         </motion.div>
