@@ -15,6 +15,10 @@ import {
   CheckCircle,
   AlertTriangle,
   Sparkles,
+  Facebook,
+  Mail,
+  Building2,
+  Star,
 } from "lucide-react";
 import type { IndustryData } from "@/lib/industries-data";
 import Navbar from "@/components/Navbar";
@@ -124,6 +128,139 @@ function IndustryCTAForm({ industryName }: { industryName: string }) {
   );
 }
 
+// ─── Hero Form (compact, inside card) ────────────────────────────────────────
+
+function HeroForm({ industryName }: { industryName: string }) {
+  const [formData, setFormData] = useState({ companyName: "", email: "", socialLink: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [focused, setFocused] = useState<string | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => { setIsSubmitting(false); setIsSubmitted(true); }, 1600);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  if (isSubmitted) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, type: "spring" }}
+        className="text-center py-6"
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5, type: "spring", delay: 0.1 }}
+          className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5"
+        >
+          <CheckCircle size={32} className="text-green-600" />
+        </motion.div>
+        <h3 className="font-display text-xl font-bold text-gray-900 mb-2">
+          Dziękujemy! Odezwiemy się w ciągu 24h.
+        </h3>
+        <p className="text-sm text-gray-500">
+          Sprawdź skrzynkę e-mail — potwierdzenie już wysłane.
+        </p>
+      </motion.div>
+    );
+  }
+
+  const fields = [
+    {
+      name: "companyName",
+      label: `Nazwa ${industryName}`,
+      placeholder: "np. Salon Fryzjerski Anna",
+      type: "text",
+      icon: Building2,
+    },
+    {
+      name: "email",
+      label: "Adres e-mail",
+      placeholder: "twoj@email.pl",
+      type: "email",
+      icon: Mail,
+    },
+    {
+      name: "socialLink",
+      label: "Link do profilu Facebook / Instagram",
+      placeholder: "facebook.com/twojafirma",
+      type: "url",
+      icon: Facebook,
+    },
+  ] as const;
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {fields.map(({ name, label, placeholder, type, icon: Icon }) => (
+        <div key={name}>
+          <label htmlFor={`hero-${name}`} className="block text-xs font-semibold text-gray-700 mb-1.5 uppercase tracking-wide">
+            {label}
+          </label>
+          <div className={`relative transition-all duration-200 ${focused === name ? "scale-[1.01]" : ""}`}>
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
+              <Icon size={16} className={focused === name ? "text-orange-500" : "text-gray-400"} />
+            </div>
+            <input
+              id={`hero-${name}`}
+              type={type}
+              name={name}
+              value={formData[name]}
+              onChange={handleChange}
+              onFocus={() => setFocused(name)}
+              onBlur={() => setFocused(null)}
+              placeholder={placeholder}
+              required
+              className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 outline-none transition-all duration-200 text-sm bg-gray-50 focus:bg-white ${
+                focused === name
+                  ? "border-orange-500 ring-4 ring-orange-500/10 shadow-sm"
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
+            />
+          </div>
+        </div>
+      ))}
+
+      <motion.button
+        type="submit"
+        disabled={isSubmitting}
+        whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+        whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+        className="w-full py-4 px-6 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-orange-500/25 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 mt-2 text-base"
+      >
+        {isSubmitting ? (
+          <>
+            <motion.span
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full block"
+            />
+            Przygotowujemy demo...
+          </>
+        ) : (
+          <>
+            Otrzymaj darmowe demo
+            <ArrowRight size={20} />
+          </>
+        )}
+      </motion.button>
+
+      <div className="flex items-center justify-center gap-1.5 pt-1">
+        <Lock size={12} className="text-gray-400" />
+        <p className="text-xs text-gray-400 text-center">
+          Bezpłatnie i bez zobowiązań. Twoje dane są bezpieczne.
+        </p>
+      </div>
+    </form>
+  );
+}
+
 // ─── FAQ Item ─────────────────────────────────────────────────────────────────
 
 function FAQItem({ question, answer, index }: { question: string; answer: string; index: number }) {
@@ -181,13 +318,13 @@ export default function IndustryLanding({ industry }: { industry: IndustryData }
       <Navbar />
       <main>
         {/* ── HERO ─────────────────────────────────────────────────────── */}
-        <section className="relative min-h-[90dvh] flex items-center bg-gradient-to-br from-white via-orange-50/20 to-orange-50/40 overflow-hidden pt-20">
+        <section className="relative min-h-[100dvh] flex items-center bg-gradient-to-br from-white via-orange-50/20 to-orange-50/40 overflow-hidden pt-20">
           {/* Animated background blobs */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <motion.div
               animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-20 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-orange-100/60 to-orange-200/30 blur-[120px]"
+              className="absolute top-10 right-0 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-orange-100/60 to-orange-200/30 blur-[120px]"
             />
             <motion.div
               animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
@@ -197,95 +334,146 @@ export default function IndustryLanding({ industry }: { industry: IndustryData }
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808010_1px,transparent_1px)] bg-[size:48px_48px]" />
           </div>
 
-          <div className="relative z-10 container-custom py-16">
-            <div className="max-w-3xl">
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-50 to-orange-100/80 border border-orange-200 mb-8 shadow-sm"
-              >
+          <div className="relative z-10 container-custom py-16 lg:py-20">
+            <div className="grid lg:grid-cols-[1fr_440px] xl:grid-cols-[1fr_480px] gap-12 xl:gap-16 items-center">
+
+              {/* LEFT — copy */}
+              <div>
+                {/* Badge */}
                 <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-50 to-orange-100/80 border border-orange-200 mb-8 shadow-sm"
                 >
-                  <Zap size={13} className="text-white" />
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center"
+                  >
+                    <Zap size={13} className="text-white" />
+                  </motion.div>
+                  <span className="text-sm font-semibold text-orange-700">{industry.hero.badge}</span>
                 </motion.div>
-                <span className="text-sm font-semibold text-orange-700">{industry.hero.badge}</span>
-              </motion.div>
 
-              {/* H1 */}
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="font-display text-4xl sm:text-5xl lg:text-[58px] font-extrabold leading-[1.1] text-gray-900 mb-6"
-              >
-                {industry.hero.headline}{" "}
-                <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
-                  {industry.hero.headlineAccent}
-                </span>{" "}
-                {industry.hero.headlineSuffix}
-              </motion.h1>
-
-              {/* Subheadline */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.25 }}
-                className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-10"
-              >
-                {industry.hero.subheadline}
-              </motion.p>
-
-              {/* CTAs */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="flex flex-col sm:flex-row gap-4 mb-10"
-              >
-                <motion.a
-                  href="#kontakt"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-orange-500/30 transition-all duration-300"
+                {/* H1 */}
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.1 }}
+                  className="font-display text-4xl sm:text-5xl lg:text-[52px] xl:text-[58px] font-extrabold leading-[1.1] text-gray-900 mb-6"
                 >
-                  Otrzymaj darmowe demo
-                  <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
-                </motion.a>
-                <motion.a
-                  href="#jak-to-dziala"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center justify-center gap-2 px-10 py-4 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white font-semibold rounded-xl transition-all duration-300"
-                >
-                  Jak to działa?
-                </motion.a>
-              </motion.div>
+                  {industry.hero.headline}{" "}
+                  <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                    {industry.hero.headlineAccent}
+                  </span>{" "}
+                  {industry.hero.headlineSuffix}
+                </motion.h1>
 
-              {/* Trust badges */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="flex flex-wrap gap-4"
-              >
-                {[
-                  { icon: Shield, label: "Bez zobowiązań" },
-                  { icon: Clock, label: "Demo w 24h" },
-                  { icon: CheckCircle, label: "Pełna obsługa techniczna" },
-                ].map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2.5 px-4 py-2 rounded-lg bg-white border border-orange-100 shadow-sm">
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center flex-shrink-0">
-                      <Icon size={14} className="text-white" />
+                {/* Subheadline */}
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.25 }}
+                  className="text-lg text-gray-600 leading-relaxed mb-10"
+                >
+                  {industry.hero.subheadline}
+                </motion.p>
+
+                {/* Trust badges */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="flex flex-wrap gap-3 mb-10"
+                >
+                  {[
+                    { icon: Shield, label: "Bez zobowiązań" },
+                    { icon: Clock, label: "Demo gotowe w 24h" },
+                    { icon: CheckCircle, label: "Pełna obsługa techniczna" },
+                  ].map(({ icon: Icon, label }) => (
+                    <div key={label} className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white border border-orange-100 shadow-sm">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center flex-shrink-0">
+                        <Icon size={12} className="text-white" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-800">{label}</span>
                     </div>
-                    <span className="text-sm font-medium text-gray-900">{label}</span>
+                  ))}
+                </motion.div>
+
+                {/* Social proof row */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
+                  className="flex items-center gap-4"
+                >
+                  <div className="flex -space-x-2">
+                    {["bg-orange-400", "bg-blue-400", "bg-green-400", "bg-purple-400"].map((c, i) => (
+                      <div key={i} className={`w-9 h-9 rounded-full ${c} border-2 border-white flex items-center justify-center text-white text-xs font-bold`}>
+                        {["A", "M", "K", "P"][i]}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  <div>
+                    <div className="flex items-center gap-1 mb-0.5">
+                      {[0,1,2,3,4].map(i => <Star key={i} size={13} className="fill-yellow-400 text-yellow-400" />)}
+                      <span className="text-sm font-bold text-gray-900 ml-1">4.9</span>
+                    </div>
+                    <p className="text-xs text-gray-500">Ponad 120 lokalnych firm nam zaufało</p>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* RIGHT — hero form card */}
+              <motion.div
+                initial={{ opacity: 0, x: 40, y: 10 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="relative"
+              >
+                {/* Glow behind card */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-orange-400/20 to-orange-600/10 rounded-3xl blur-2xl" />
+
+                <div className="relative bg-white rounded-3xl shadow-2xl border border-orange-100/60 overflow-hidden">
+                  {/* Card top stripe */}
+                  <div className="h-1.5 w-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600" />
+
+                  <div className="p-8">
+                    {/* Card header */}
+                    <div className="mb-6">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-50 border border-green-200 mb-4">
+                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-xs font-semibold text-green-700">Darmowe demo — bez zobowiązań</span>
+                      </div>
+                      <h2 className="font-display text-2xl font-bold text-gray-900 leading-tight mb-2">
+                        Otrzymaj gotową stronę<br />
+                        <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">w ciągu 24 godzin</span>
+                      </h2>
+                      <p className="text-sm text-gray-500">
+                        Podaj link do Facebooka — my robimy resztę. Sprawdzisz efekt zanim zapłacisz.
+                      </p>
+                    </div>
+
+                    <HeroForm industryName={industry.name} />
+                  </div>
+
+                  {/* Bottom strip */}
+                  <div className="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-center gap-6">
+                    {[
+                      { label: "120+", sub: "firm" },
+                      { label: "24h", sub: "do demo" },
+                      { label: "4.9★", sub: "ocena" },
+                    ].map(({ label, sub }) => (
+                      <div key={sub} className="text-center">
+                        <div className="text-sm font-bold text-gray-900">{label}</div>
+                        <div className="text-xs text-gray-500">{sub}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </motion.div>
+
             </div>
           </div>
         </section>
