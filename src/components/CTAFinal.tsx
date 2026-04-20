@@ -19,12 +19,19 @@ export default function CTAFinal() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, source: "Strona glowna" }),
+      });
+      if (!res.ok) throw new Error("server error");
       setIsSubmitted(true);
-    }, 1500);
+    } catch {
+      alert("Wyst\u0105pi\u0142 b\u0142\u0105d. Spr\u00f3buj ponownie lub napisz bezpo\u015brednio na karol@devtrade.pl");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -31,10 +31,22 @@ function IndustryCTAForm({ industryName }: { industryName: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => { setIsSubmitting(false); setIsSubmitted(true); }, 1500);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, industryName, source: "Landing page - sekcja CTA" }),
+      });
+      if (!res.ok) throw new Error("server error");
+      setIsSubmitted(true);
+    } catch {
+      alert("Wyst\u0105pi\u0142 b\u0142\u0105d. Spr\u00f3buj ponownie lub napisz bezpo\u015brednio na karol@devtrade.pl");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,10 +148,22 @@ function HeroForm({ industryName }: { industryName: string }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => { setIsSubmitting(false); setIsSubmitted(true); }, 1600);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, industryName, source: "Landing page - hero" }),
+      });
+      if (!res.ok) throw new Error("server error");
+      setIsSubmitted(true);
+    } catch {
+      alert("Wyst\u0105pi\u0142 b\u0142\u0105d. Spr\u00f3buj ponownie lub napisz bezpo\u015brednio na karol@devtrade.pl");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
